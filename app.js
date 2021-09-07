@@ -18,7 +18,8 @@ app.use(express.static(path.join(__dirname, '/public/')));                     /
      // __dirname is a variable that is bundled into node                       // that will set up middleware to handle static files -- tell where its going to pull those static files from; use node package called PATH; dont need to install, comes with node
     // (__dirname, -where its running from--
 
-
+app.set('views', '')                // allow variables to be set inside context of application  -- variable is being set as views, and its telling where views is 
+app.set('view engine', 'ejs')       // tell express what the view engine is :   summary - express app is looking into src/views for templates associated with ejs and -- that is what its going to use to RENDER HTML --
 
 
 // ---------------------
@@ -30,7 +31,8 @@ app.use(express.static(path.join(__dirname, '/public/')));                     /
 // ---------------------
 
 app.get('/', (req, res) => { 
-    res.send('Hello from my app');  //response w/ msg
+ // From : -->   res.send('Hello from my app');  //response w/ msg
+ /* To : -->  */ res.render('index', {title: 'Welcome to your mom'});  // which is referenceing to the ejs file : pass object into it which is <title>
 });
 
 app.listen(3000, () => {      // callback after listening; skipped - go right into function
@@ -38,18 +40,3 @@ app.listen(3000, () => {      // callback after listening; skipped - go right in
 }); // >DEBUG=*& node (or start) app.js to see results in console  IN CMD not Powershell -- debug wont spit stuff on console on default 
 
 // npm install morgan - log web traffic 
-
-
-// listen on port 3000          console - display msg 
-//app.listen(port, () => console.info('Listening on port ${port}'))
-
-// when user goes to route of application..
-//app.get("/", (req, res) => res.send("Hello World"));
-//enter post into postman
-//app.post("/", (req, res) => res.send("Hello from post method"));
-
-//app.use(express.static("public"));
-
-//app.listen(port, () => {
-//    console.log("Server is at http://localhost:3000");
-//})
