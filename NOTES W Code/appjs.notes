@@ -48,3 +48,22 @@ app.listen(PORT, () => {      // callback after listening; skipped - go right in
 
 ! set DEBUG=* & node app.js !   [for script in json package]
 ! set DEBUG=* & nodemon app.js !
+
+
+
+#index.ejs in scr/views before example demo replacement 
+
+  <html>
+    <body>
+        <h1>
+            Welcome to your <%= title %>
+        </h1>
+        <ul>
+        <!<% data.map((i) => {
+            %><li><%=i%></li><% 
+        })
+        %>
+        </ul>
+    </body>
+</html>
+
