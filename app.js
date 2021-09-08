@@ -25,7 +25,7 @@ app.set('view engine', 'ejs');
 // ---------------------
 
 app.get('/', (req, res) => { 
- res.render('index', { title: 'MOM' });  
+ res.render('index', { title: 'MOM', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
 });
 
 app.listen(PORT, () => {     
