@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');       // tell express what the view engine is :  
 app.get('/', (req, res) => { 
  // From : -->   res.send('Hello from my app');  //response w/ msg
  /* To : -->  */ 
- res.render('index', { title: 'Welcome to your mom'});  // which is referenceing to the ejs file : pass object into it which is <title>
+ res.render('index', { title: 'MOM' });  // which is referenceing to the ejs file : pass object into it which is <title>
 });
 
 app.listen(PORT, () => {      // callback after listening; skipped - go right into function
