@@ -1,0 +1,37 @@
+-------------------------> 
+TODO:
+1. 
+2.
+3. 
+To add a new "TODO" item checkbox, use the cmd+L shortcut:
+
+[ ] Pick up daughter after school
+[√] Install VS Code `notes` extension
+
+- ffsdf 
+- important: fffdf 
+
+Notes:
+Ideas:
+TODO:
+Activity Log:
+
+-= special heading =-
+== special heading ==
+
+[javascript]
+function() {
+    console.log("nice syntax highlight!");
+}
+[end]
+
+#tag# "double" `backtick` 
+
+---> arrow
+=> arrow 
+*emphasis*
+! critical ! 
+( paraenthetical coloring)
+// comment 
+
+--------------------------> 
