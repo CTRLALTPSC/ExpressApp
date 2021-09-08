@@ -24,6 +24,14 @@ app.set('view engine', 'ejs');
 //  app.get('/',(req, res)=>{ }npm )
 // ---------------------
 
+//---------------------
+//app.get('/sessions');           // change brands to sessions on demo UI, executes 
+//app.get('/sessions/sessionID');
+//---------------------- instead.. encapsulate code and use USE
+
+app.use('/sessions', sessionRouter);
+// use middleware (use), everything that goes to sessions, implement sessionrouter [ holds all code necessary to deal with sessions route]
+
 app.get('/', (req, res) => { 
  res.render('index', { title: 'MOM', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
 });
