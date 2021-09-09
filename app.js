@@ -7,7 +7,8 @@ const morgan = require('morgan');
 const path = require('path')
 
 const PORT = process.env.PORT || 3000;        
-const app = express();               
+const app = express();      
+const sessionsRouter = express.Router();    // express hands over bundle of code called a router         
 
 app.use(morgan('tiny'));            
 
