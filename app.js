@@ -30,8 +30,22 @@ app.set('view engine', 'ejs');
 //app.get('/sessions/sessionID');
 //---------------------- instead.. encapsulate code and use USE
 
-app.use('/sessions', sessionRouter);
+app.use('/sessions', sessionsRouter);
 // use middleware (use), everything that goes to sessions, implement sessionrouter [ holds all code necessary to deal with sessions route]
+
+sessionsRouter.route('/').get((req,res) => {
+    res.render('sessions', {sessions: [  // pass in object, pass in an array of sessions: title and description  
+        {title: 'Session 1', description: 'this is sessions 1'},
+        {title: 'Session 2', description: 'this is sessions 2'},
+        {title: 'Session 3', description: 'this is sessions 3'},
+        {title: 'Session 4', description: 'this is sessions 4'},
+        ],  // when sessions is rendering, object is getting passed in that which has sessions data in it 
+    });                
+});
+
+sessionsRouter.route('/1').get((req,res) => {
+    res.send('hello single sessions')
+});
 
 app.get('/', (req, res) => { 
  res.render('index', { title: 'MOM', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
