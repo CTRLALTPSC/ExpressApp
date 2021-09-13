@@ -43,7 +43,9 @@ sessionsRouter.route('/').get((req,res) => {
 
 sessionsRouter.route('/:id').get((req,res) => {         // :id / whatever comes after will be passed into this router function
     const id = req.params.id;       // http://localhost:4000/sessions/sdfghdsfhh--> "hello single sessions sdfhsdkg" onto page
-    res.send('hello single session ' + id);
+    res.render('session', {
+        session: sessions[id],      // pass in object through sessions, id will pass info onto page of session page
+    }
 });
 
 app.get('/', (req, res) => { 
