@@ -6,7 +6,7 @@ const express = require('express');
 const chalk = require('chalk');                   // sets color on msgs to group together
 const debug = require('debug')('app')            // pass in file or section of code that we are in
 const morgan = require('morgan');
-const path = require('path')
+const path = require('path');
 
 const PORT = process.env.PORT || 3000;        
 const app = express();      

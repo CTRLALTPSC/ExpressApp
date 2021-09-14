@@ -1,7 +1,10 @@
+
+const express = require('express');
+const sessions = require('../data/sessions.json');   // no longer in scr.scr since its in scr (folder)
+
 // pulling express like previously in app.js
 // creating sessionsrouter and routing it all, then last is to export sessionsrouter as module.exports
 const sessionsRouter = express.Router();    // express hands over bundle of code called a router
-const sessions = require('../data/sessions.json');   // no longer in scr.scr since its in scr (folder)
 
 sessionsRouter.route('/').get((req, res) => {
     res.render('sessions', {  // pass in object, pass in an array of sessions: title and description {deleted} -> pass sessions in on object instead
