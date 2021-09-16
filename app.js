@@ -12,9 +12,9 @@ const PORT = process.env.PORT || 3000;
 const app = express();      
 // moved sessionsrouter to sessionrouter file, now pull from new location
 const sessionsRouter = require('./src/routers/sessionsRouter');     // pulled all that info out of app.js and is now and dropped it onto the sessions page 
+const adminRouter = require('./src/routers/adminRouter');           // add in required adminrouter 
 
 app.use(morgan('tiny'));            
-
 app.use(express.static(path.join(__dirname, '/public/')));              
 
 app.set('views', './src/views');             
@@ -37,6 +37,8 @@ app.set('view engine', 'ejs');
 
 app.use('/sessions', sessionsRouter);
 // use middleware (use), everything that goes to sessions, implement sessionrouter [ holds all code necessary to deal with sessions route]
+
+app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => { 
  res.render('index', { title: 'Globomatics', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
