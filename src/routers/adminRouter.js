@@ -1,6 +1,7 @@
 const express = require('express'); // for adminrouter 
-const debug = require('debug')('app:adminRouter')            // pass in file or section of code that we are in  // debug here like to kinda debug in mongo information and include it in adminRouter
+const debug = require('debug')('app:adminRouter');          // pass in file or section of code that we are in  // debug here like to kinda debug in mongo information and include it in adminRouter
 const { MongoClient } = require('mongodb'); // pull in mongodb -- installed in terminal  // mongodb.MongoClient --> destructure by pulling the mongoclient piece out of mongodb and use that directly 
+
 const sessions = require('../data/sessions.json');   // no longer in scr.scr since its in scr -folder-  // -- DROPPED HERE CUZ THIS IS THE SESSIONS DATA THAT WE WANT TO CREATE UP IN THE MONGO DB
 
 const adminRouter = express.Router();
@@ -26,7 +27,7 @@ adminRouter.route('/').get((req, res) => {
     
       const response = await db.collection('sessions').insertMany(sessions);
                     // creating a collection called session
-      res.json (response);
+      res.json(response);
             // so far, weve just had res.send which will send back strings, to just send pieces of info back...
             // and a res.render which rendered index or session/sessions and ran it through the templating engine and rendered a page 
             // now -- use a res.json, back to the response, back to the browser thats getting it. 

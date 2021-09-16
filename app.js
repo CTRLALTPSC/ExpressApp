@@ -4,7 +4,7 @@
 // declaring const object to 'require' using its passed object which is itself  
 const express = require('express');
 const chalk = require('chalk');                   // sets color on msgs to group together
-const debug = require('debug')('app')            // pass in file or section of code that we are in
+const debug = require('debug')('app');            // pass in file or section of code that we are in
 const morgan = require('morgan');
 const path = require('path');
 
@@ -34,11 +34,9 @@ app.set('view engine', 'ejs');
 //---------------------- instead.. encapsulate code and use USE
 
 // moved sessionsRouter to router folder 
-
+app.use('/admin', adminRouter);
 app.use('/sessions', sessionsRouter);
 // use middleware (use), everything that goes to sessions, implement sessionrouter [ holds all code necessary to deal with sessions route]
-
-app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => { 
  res.render('index', { title: 'Globomatics', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
