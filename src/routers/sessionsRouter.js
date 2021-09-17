@@ -1,7 +1,7 @@
 
 const express = require('express');
 const debug = require('debug')('app:sessionsRouter');
-const { MongoClient } = require('mongodb'); // pull in mongodb   
+const { MongoClient, ObjectID} = require('mongodb'); // pull in mongodb   
 
 const sessions = require('../data/sessions.json');   // no longer in scr.scr since its in scr (folder)
 
@@ -29,15 +29,14 @@ sessionsRouter.route('/').get((req, res) => {
       const db = client.db(dbName); //client that is back from mongoclient, the .dbname is now providing database  -- this database doesnt exist yet tho, mongo can selfcreate when its read to go and it will be ready to start dropping data
     
       const sessions = await db.collection('sessions').find().toArray(); //will pull everything out of database that is in session
-                    // creating a collection called session
-      res.render('sessions', {sessions});
+                    // creating a collection called session         // instead of findOne().toArray(); - changed to findOne; find by id, object id is what we want... .findOne({_id: id}) wont work cuz id is a string, so create a new object id instead and search for that -- added new object to the top as a const
+      res.render('sessions', { sessions });
           // pass in sessions, whatever we got out of our collection  
-
     } catch (error) {
       debug(error.stack);        // if something breaks, will know  
     }
-
-    }())
+    client.close();
+    })();
    // res.render('sessions', {  // pass in object, pass in an array of sessions: title and description {deleted} -> pass sessions in on object instead
     //    sessions, // looping over sessions.map, pulling all sesions out of .json file for information under "learn more" 
     //                            // when sessions is rendering, object is getting passed in that which has sessions data in it 
@@ -46,8 +45,30 @@ sessionsRouter.route('/').get((req, res) => {
 
 sessionsRouter.route('/:id').get((req, res) => {         // :id / whatever comes after will be passed into this router function
     const id = req.params.id;       // http://localhost:4000/sessions/sdfghdsfhh--> "hello single sessions sdfhsdkg" onto page
-    res.render('session', {
-        session: sessions[id],      // pass in object through sessions from above request, not pass in object through its route, id will pass info onto page of session page
+    const url =
+   'mongodb+srv://dbUser:D0OSnIEY7l2Kvfrc@jsexample.kcxwf.mongodb.net?retryWrites=true&w=majority'  // from database (connector ig)                         
+  const dbName = 'jsexample';
+  
+  (async function mongo(){          // creating little environment right here in the code ' {} ' thats going to allow mongo to run in that async fashion 
+                                        // so everything from here is just going to execute in line as it goes 
+    let client;
+    try {   // below: need to open client
+      client = await MongoClient.connect(url);  // no need for a 'promise' because await is being used which means that client will sit there and wait for mongodb to connect to the url 
+      debug('Connected to the mongo DB');
+    // debug statement above to know whats going on, then below this an instance is created of the database
+
+      const db = client.db(dbName); //client that is back from mongoclient, the .dbname is now providing database  -- this database doesnt exist yet tho, mongo can selfcreate when its read to go and it will be ready to start dropping data
+    
+      const sessions = await db.collection('sessions').findOne({_id: new ObjectId(id)}); //will pull everything out of database that is in session
+                    // creating a collection called session         // instead of findOne().toArray(); - changed to findOne; find by id, object id is what we want... .findOne({_id: id}) wont work cuz id is a string, so create a new object id instead and search for that -- added new object to the top as a const
+      res.render('sessions', { sessions });
+      } catch (error) {
+          debug(error.stack);
+      }     // pass in sessions, whatever we got out of our collection 
+      client.close(); 
+    })();
+      res.render('sessions', {
+        sessions: sessions[id],
     });
 });
 
