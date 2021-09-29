@@ -13,9 +13,16 @@ const app = express();
 // moved sessionsrouter to sessionrouter file, now pull from new location
 const sessionsRouter = require('./src/routers/sessionsRouter');     // pulled all that info out of app.js and is now and dropped it onto the sessions page 
 const adminRouter = require('./src/routers/adminRouter');           // add in required adminrouter 
+const authRouter = require('./src/routers/authRouter');
 
 app.use(morgan('tiny'));            
-app.use(express.static(path.join(__dirname, '/public/')));              
+app.use(express.static(path.join(__dirname, '/public/')));   
+app.use(express.json()); 
+app.use(express.urlencoded({extended:false}));        // object, function, and when post is sent through the request pipeline,
+                                                    //  the application now has a piece of middleware thats going to interrupt as its going through
+                                                    // and its going to execute morgan and look for static files, and then after that its going to say 'hey, if theres something on the body, pull it out using this express.json constructor..
+                                                    // and whatever that returns, drop it back on the request as req.body; 
+app.use('/auth', authRouter);
 
 app.set('views', './src/views');             
 app.set('view engine', 'ejs');       
