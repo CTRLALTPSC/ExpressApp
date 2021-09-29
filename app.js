@@ -7,6 +7,9 @@ const chalk = require('chalk');                   // sets color on msgs to group
 const debug = require('debug')('app');            // pass in file or section of code that we are in
 const morgan = require('morgan');
 const path = require('path');
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
 const PORT = process.env.PORT || 3000;        
 const app = express();      
@@ -22,7 +25,12 @@ app.use(express.urlencoded({extended:false}));        // object, function, and w
                                                     //  the application now has a piece of middleware thats going to interrupt as its going through
                                                     // and its going to execute morgan and look for static files, and then after that its going to say 'hey, if theres something on the body, pull it out using this express.json constructor..
                                                     // and whatever that returns, drop it back on the request as req.body; 
-app.use('/auth', authRouter);
+app.use(cookieParser());
+app.use(session({secret: 'globomantics'}))
+// these pieces of middleware need to flow in order
+
+require('./src/config/passport.js')(app)
+// same thing with routes for passport; pass app into this -- passport.js is going to return back a function, then execute it and pass app into it
 
 app.set('views', './src/views');             
 app.set('view engine', 'ejs');       
@@ -44,6 +52,7 @@ app.set('view engine', 'ejs');
 app.use('/admin', adminRouter);
 app.use('/sessions', sessionsRouter);
 // use middleware (use), everything that goes to sessions, implement sessionrouter [ holds all code necessary to deal with sessions route]
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => { 
  res.render('index', { title: 'Globomatics', data: ['a', 'b', 'c'] });  // array, pass pieces of data into index: create list in indexejx, then loop over data 
