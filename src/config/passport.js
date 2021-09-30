@@ -1,5 +1,8 @@
-const passport = require('passport');
+// local strategy -- hand us a username and password, and were going to figure out whether or not youre authenticated 
+// locally, in own codebase instead of doing a social login or an okta login or something like that. 
 
+const passport = require('passport');
+require('./strategies/local/strategy')();
 
 
 module.exports = function passportConfig(app){
