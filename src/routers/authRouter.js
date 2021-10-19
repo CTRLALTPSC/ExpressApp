@@ -17,7 +17,7 @@ authRouter.route('/signUp').post((req, res)=>{
          client = await MongoClient.connect(url);
 
          const db = client.db(dbName);
-         const user = { username, password };  // promise of pending error for results is because you need to'await' results (see below)
+         const user = {username, password};  // promise of pending error for results is because you need to'await' results (see below)
          const results = await db.collection('users').insertOne(user);     /// creates a new collection, which doesnt yet exist until ran/updated(10.4)
          debug(results); //spit out results
          // once that user is created, its gonna do the log in
@@ -38,6 +38,18 @@ authRouter.route('/signUp').post((req, res)=>{
        client.close();
    })();
 });
+
+authRouter
+    .route('/signIn')
+    .get((req, res) => {
+        res.render('signin');
+    })
+    .post(passport.authenticate('local', {
+        successRedirect: '/auth/profile',
+        failureMessage: '/',
+    })
+);
+
 authRouter.route('/profile').get((req, res)=>{      // passport has given login function that allows to log a user in, also if the user is logged in, its going to give us a user
     res.json(req.user);         // send back req.user 
 });   // auth/profile but auth is raked into the route already, then do req and res
