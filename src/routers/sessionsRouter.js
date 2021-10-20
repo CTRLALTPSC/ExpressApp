@@ -9,6 +9,16 @@ const sessions = require('../data/sessions.json');   // no longer in scr.scr sin
 // creating sessionsrouter and routing it all, then last is to export sessionsrouter as module.exports
 const sessionsRouter = express.Router();    // express hands over bundle of code called a router
 
+sessionsRouter.use((req, res, next)=>{
+  if(req.user){ // check if passport has dropped a user on the request
+    next();
+  } else {
+    res.redirect('/auth/signIn');    // else, redirect to signin - if you didnt sign in, you cant get to the sessions page 
+  }
+
+})      // middleware IS A FUNCTION like every thing else is; this set will cover all of middleware for sessionsRouter; NEXT makes this piece middleware
+
+
 sessionsRouter.route('/').get((req, res) => {
     const url =
    'mongodb+srv://dbUser:D0OSnIEY7l2Kvfrc@jsexample.kcxwf.mongodb.net?retryWrites=true&w=majority'  // from database (connector ig)                         
