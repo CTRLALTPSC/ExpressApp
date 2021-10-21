@@ -10,9 +10,9 @@ module.exports = function localStrategy() {
                 usernameField: 'username',
                 passwordField: 'password',       // gonna send that info:username and password to a function - username,password, and the done callback
             }, 
-    (username, password, done) => {  // then, take username and password, go to a database, look up the user, validate password, then create user object out of that, but for now, create user const cuz we arent doing all that other work yet
+        (username, password, done) => {  // then, take username and password, go to a database, look up the user, validate password, then create user object out of that, but for now, create user const cuz we arent doing all that other work yet
         const user = { username, password, 'name': 'John' };
-        done(null, user) // call done to say theres no errors and then the user we just created 
+        done(null, user); // call done to say theres no errors and then the user we just created 
     }
  )
 );

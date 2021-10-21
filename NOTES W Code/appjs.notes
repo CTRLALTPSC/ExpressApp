@@ -67,3 +67,4 @@ app.listen(PORT, () => {      // callback after listening; skipped - go right in
     </body>
 </html>
 
+sessionsRouter.use()      // middleware IS A FUNCTION like every thing else is 
